@@ -27,6 +27,7 @@ const CreateSalonForm = () => {
       name: '',
       code: '',
       capacity: 0,
+      priority: 0,
       sede_id: 0,
       turn_id: 0,
       registration_process_id: 0
@@ -61,6 +62,7 @@ const CreateSalonForm = () => {
             name: '',
             code: '',
             capacity: 0,
+            priority: 0,
             sede_id: 0,
             turn_id: 0,
             registration_process_id: 0
@@ -103,6 +105,17 @@ const CreateSalonForm = () => {
                type="number"
                id="capacity"
                value={formData.capacity}
+               onChange={handleChange}
+               required
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+         </div>
+         <div className="mb-4">
+            <label htmlFor="priority" className="block text-gray-700 text-sm font-bold mb-2">Prioridad:</label>
+            <input
+               type="number"
+               id="priority"
+               value={formData.priority}
                onChange={handleChange}
                required
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

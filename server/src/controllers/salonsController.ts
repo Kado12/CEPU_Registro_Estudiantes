@@ -13,11 +13,11 @@ export const createSalon = async (req: Request, res: Response, next: NextFunctio
          })
       }
 
-      const { name, code, capacity, sede_id, turn_id, registration_process_id } = transformObjectToUpperCase(req.body.salonData)
+      const { name, code, capacity, priority, sede_id, turn_id, registration_process_id } = transformObjectToUpperCase(req.body.salonData)
 
       const response = await pool.execute(
-         'INSERT INTO salons (name, code, capacity, sede_id, turn_id, registration_process_id) VALUES (?, ?, ?, ?, ?, ?)',
-         [name, code, capacity, sede_id, turn_id, registration_process_id]
+         'INSERT INTO salons (name, code, capacity, priority, sede_id, turn_id, registration_process_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+         [name, code, capacity, priority, sede_id, turn_id, registration_process_id]
       )
 
       res.json({
@@ -28,6 +28,7 @@ export const createSalon = async (req: Request, res: Response, next: NextFunctio
             name,
             code,
             capacity,
+            priority,
             sede_id,
             turn_id,
             registration_process_id

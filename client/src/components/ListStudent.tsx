@@ -7,6 +7,7 @@ import { useTurnStore } from "../store/useTurnStore"
 import { useSalonStore } from "../store/useSalonStore"
 import { usePaymentPlanStore } from "../store/usePaymentPlanStore"
 import { useProcessStore } from "../store/useProcessStore"
+import EditStudentForm from "./EditStudentForm"
 import { MdNavigateBefore, MdNavigateNext, MdDeleteForever, MdEdit, MdDownload } from "react-icons/md"
 
 const ListStudent = () => {
@@ -31,6 +32,9 @@ const ListStudent = () => {
    const { salons, refreshSalons } = useSalonStore()
    const { paymentPlans, refreshPaymentPlans } = usePaymentPlanStore()
    const { processes, refreshProcesses } = useProcessStore()
+
+   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null)
 
    useEffect(() => {
       refreshStudents()
@@ -115,6 +119,16 @@ const ListStudent = () => {
       } else {
          setDisplayMessage("PDF no disponible para este estudiante.")
       }
+   }
+
+   const handleEdit = (studentId: number) => {
+      setSelectedStudentId(studentId)
+      setIsEditModalOpen(true)
+   }
+
+   const closeEditModal = () => {
+      setIsEditModalOpen(false)
+      setSelectedStudentId(null)
    }
 
    const handleDelete = async (studentId: number, token: string | null) => {
@@ -250,7 +264,10 @@ const ListStudent = () => {
                            <button onClick={() => handleDelete(student.id, token)} disabled={loading} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-1 rounded text-xs m-1">
                               <MdDeleteForever className="w-5 h-5" />
                            </button>
-                           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded text-xs">
+                           <button
+                              onClick={() => handleEdit(student.id)}
+                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded text-xs"
+                           >
                               <MdEdit className="w-5 h-5" />
                            </button>
                            <button onClick={() => handleDownloadPDF(student.dni, token)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-1 rounded text-xs m-1">
@@ -286,6 +303,30 @@ const ListStudent = () => {
                </span>
             </div>
          </div>
+         {/* Modal de edición */}
+         {isEditModalOpen && selectedStudentId && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+               <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+                  {/* Header del modal */}
+                  <div className="flex justify-between items-center p-6 border-b border-gray-200">
+                     <h2 className="text-2xl font-bold text-gray-800">Editar Estudiante</h2>
+                     <button
+                        onClick={closeEditModal}
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                     >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                     </button>
+                  </div>
+
+                  {/* Contenido scrollable */}
+                  <div className="flex-1 overflow-y-auto">
+                     <EditStudentForm studentId={selectedStudentId} onClose={closeEditModal} />
+                  </div>
+               </div>
+            </div>
+         )}
       </>
    )
 }

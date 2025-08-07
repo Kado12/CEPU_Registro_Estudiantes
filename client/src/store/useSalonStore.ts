@@ -6,6 +6,7 @@ interface Salon {
    name: string
    code: string
    capacity: number
+   priority: number
    sede_id: number
    turn_id: number
    registration_process_id: number
@@ -51,7 +52,8 @@ export const useSalonStore = create<SalonState>((set) => ({
       try {
          const response = await createSalon(salonData, is_administrator, token)
          set((state) => ({
-            salons: [...state.salons, { name: response.data.name, code: response.data.code, capacity: response.data.capacity, sede_id: response.data.sede_id, turn_id: response.data.turn_id, registration_process_id: response.data.registration_process_id, id: response.data.id }],
+            salons: [...state.salons, { name: response.data.name, code: response.data.code, capacity: response.data.capacity, priority: response.data.priority, sede_id: response.data.sede_id, turn_id: response.data.turn_id, registration_process_id: response.data.registration_process_id, id: response.data.id }],
+
             loading: false,
             success: true,
             message: 'Salón creado exitosamente.'
