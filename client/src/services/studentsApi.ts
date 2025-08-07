@@ -52,6 +52,18 @@ export const deleteStudent = async (studentId: number, is_administrator: boolean
    return response.data
 }
 
+export const updateStudent = async (studentId: number, studentData: Omit<Student, 'id'>, photo: string, is_administrator: boolean, token: string) => {
+   if (!token) {
+      throw new Error("Token no encontrado")
+   }
+   const response = await axios.put(`${API_URL}/students/update/${studentId}`, { studentData, photo, is_administrator }, {
+      headers: {
+         Authorization: `Bearer ${token}`
+      }
+   })
+   return response.data
+}
+
 export const downloadPDF = async (studentId: number, is_administrator: boolean, token: string) => {
    const response = await axios.get(`${API_URL}/students/download-pdf/${studentId}`, {
       headers: {

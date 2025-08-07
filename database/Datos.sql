@@ -143,6 +143,15 @@ INSERT INTO salons (
       turn_id,
       registration_process_id
    )
+VALUES ('A11-T', 'A11', 40, 1, 2, 1);
+INSERT INTO salons (
+      code,
+      name,
+      capacity,
+      sede_id,
+      turn_id,
+      registration_process_id
+   )
 VALUES ('A12-T', 'A12', 40, 1, 2, 1);
 INSERT INTO salons (
       code,

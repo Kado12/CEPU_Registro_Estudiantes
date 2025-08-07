@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { createStudent, deleteStudent, downloadPDF, listStudents } from "../services/studentsApi"
+import { createStudent, deleteStudent, downloadPDF, listStudents, updateStudent } from "../services/studentsApi"
 
 interface Student {
    id: number
@@ -40,6 +40,7 @@ interface StudentState {
    addStudent: (studentData: Omit<Student, 'id'>, is_administrator: boolean, token: string) => Promise<Student>
    removeStudent: (studentId: number, is_administrator: boolean, token: string) => Promise<void>
    downloadPDF: (studentId: number, is_administrator: boolean, token: string) => Promise<PDF>
+   updateStudent: (studentId: number, studentData: Omit<Student, 'id'>, is_administrator: boolean, token: string) => Promise<Student>
 }
 
 export const useStudentStore = create<StudentState>((set) => ({
@@ -91,6 +92,25 @@ export const useStudentStore = create<StudentState>((set) => ({
       } catch (error) {
          console.error('Error deleting student:', error)
          set({ error: 'Error al eliminar el estudiante', loading: false, success: false, message: 'Error al eliminar el estudiante.' })
+      }
+   },
+   updateStudent: async (studentId, studentData, is_administrator, token) => {
+      set({ loading: true, error: '', success: false, message: '' })
+      try {
+         const photo = studentData.photo_base_64 || ''
+         const response = await updateStudent(studentId, studentData, photo, is_administrator, token)
+         set((state) => ({
+            students: state.students.map(student =>
+               student.id === studentId ? { ...studentData, id: studentId } : student
+            ),
+            loading: false,
+            success: true,
+            message: 'Estudiante actualizado exitosamente.'
+         }))
+         return response.data
+      } catch (error) {
+         console.error('Error updating student:', error)
+         set({ error: 'Error al actualizar el estudiante', loading: false, success: false, message: 'Error al actualizar el estudiante.' })
       }
    },
    downloadPDF: async (studentId, is_administrator, token) => {
