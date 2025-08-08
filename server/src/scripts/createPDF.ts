@@ -49,8 +49,8 @@ function getA5ContentWithHeaderFooter(student: StudentData, photo_base_64: strin
 
    const footer = {
       columns: [
-         { text: 'Dirección: Calle Ficticia 123 - Tel: 555-1234', alignment: 'left', fontSize: 9, margin: [10, 10, 0, 0] },
-         { text: 'www.centroejemplo.edu', alignment: 'right', fontSize: 9, margin: [0, 10, 10, 0] }
+         { text: 'Dirección: Av. Los Maestros S/N - Carretera Panamericana Sur km. 300.5 - Tel: (056) 321485', alignment: 'left', fontSize: 9, margin: [10, 10, 0, 0] },
+         { text: 'https://cepu.unica.edu.pe/', alignment: 'right', fontSize: 9, margin: [0, 10, 10, 0] }
       ],
       margin: [0, 10, 0, 0],
    };
