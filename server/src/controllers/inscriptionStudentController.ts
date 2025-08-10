@@ -55,7 +55,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
       // Insertar estudiante con el PDF
       const response = await pool.execute(
-         'INSERT INTO students (name, last_name, dni, phone, record_number, date_inscription, payment_plan_id, need_to_pay, registration_process_id, sede_id, salon_id, turn_id, photo_base_64) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+         'INSERT INTO students (name, last_name, dni, phone, record_number, date_inscription, payment_plan_id, need_to_pay, registration_process_id, sede_id, salon_id, turn_id, photo_base_64) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
          [name, last_name, dni, phone, record_number, date_inscription, payment_plan_id, need_to_pay, registration_process_id, sede_id, salon.id, turn_id, photo_base_64]
       )
 
