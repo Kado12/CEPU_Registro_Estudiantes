@@ -74,7 +74,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
 export const listStudents = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const [rows] = await pool.execute('SELECT id, name, last_name, dni, record_number, date_inscription, payment_plan_id, need_to_pay, registration_process_id, sede_id, salon_id, turn_id FROM students')
+      const [rows] = await pool.execute('SELECT id, name, last_name, dni, phone, record_number, date_inscription, payment_plan_id, need_to_pay, registration_process_id, sede_id, salon_id, turn_id FROM students')
       res.json({
          success: true,
          data: rows
