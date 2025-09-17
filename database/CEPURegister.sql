@@ -75,6 +75,52 @@ CREATE TABLE students (
   FOREIGN KEY (salon_id) REFERENCES salons(id) ON DELETE CASCADE,
   FOREIGN KEY (turn_id) REFERENCES turns(id) ON DELETE CASCADE
 );
+-- ASISTENCIA DOCENTE
+-- Tabla de Semanas
+CREATE TABLE weeks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  code VARCHAR(50) NOT NULL UNIQUE
+);
+-- Tabla de Dias
+CREATE TABLE days (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+-- Tabla de Estado
+CREATE TABLE conditions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  code VARCHAR(50) NOT NULL UNIQUE
+);
+-- Tabla de Docentes
+CREATE TABLE teachers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  dni INT NOT NULL
+);
+-- Tabla de Asistencias Docente
+CREATE TABLE teacher_attendances (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  teacher_id INT NOT NULL,
+  week_id INT NOT NULL,
+  day_id INT NOT NULL,
+  sede_id INT NOT NULL,
+  salon_id INT NOT NULL,
+  turn_id INT NOT NULL,
+  condition_id INT NOT NULL,
+  late_minutes INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE,
+  FOREIGN KEY (week_id) REFERENCES weeks(id) ON DELETE CASCADE,
+  FOREIGN KEY (day_id) REFERENCES days(id) ON DELETE CASCADE,
+  FOREIGN KEY (sede_id) REFERENCES sedes(id) ON DELETE CASCADE,
+  FOREIGN KEY (salon_id) REFERENCES salons(id) ON DELETE CASCADE,
+  FOREIGN KEY (turn_id) REFERENCES turns(id) ON DELETE CASCADE,
+  FOREIGN KEY (condition_id) REFERENCES conditions(id) ON DELETE CASCADE
+);
 -- Índices para optimizar consultas frecuentes
 CREATE INDEX idx_sedes_name ON sedes(name);
 CREATE INDEX idx_turns_name ON turns(name);
@@ -82,3 +128,4 @@ CREATE INDEX idx_salons_sede_turn ON salons(sede_id, turn_id);
 CREATE INDEX idx_students_salon ON students(salon_id);
 CREATE INDEX idx_registration_processes_code ON registration_processes(code);
 CREATE INDEX idx_payment_plans_name ON payment_plans(name);
+CREATE INDEX idx_teacher_attendances_user_teacher_week_day ON teacher_attendances(user_id, teacher_id, week_id, day_id);
