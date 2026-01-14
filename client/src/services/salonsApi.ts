@@ -7,6 +7,7 @@ interface Salon {
    name: string
    code: string
    capacity: number
+   priority: number
    sede_id: number
    turn_id: number
    registration_process_id: number
